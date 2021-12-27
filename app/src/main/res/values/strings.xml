@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Stock Beaver</string>
+    <!-- Strings used for fragments for navigation -->
+
+    <string name="signup">signup</string>
+    <string name="login">login</string>
+    <string name="StockBeaver">Stock Beaver</string>
+    <string name="stock_portfolio">Track your stock portfolio</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="register">Register</string>
+    <string name="username">Username</string>
+    <string name="title_activity_main_page">MainPage</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+
+</resources>

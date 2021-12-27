@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_watchlist">
+
+    <fragment
+        android:id="@+id/navigation_watchlist"
+        android:name="com.example.stockbeaver.ui.watchlist.WatchlistFragment"
+        android:label="Watchlist"
+        tools:layout="@layout/fragment_watchlist" />
+
+    <fragment
+        android:id="@+id/navigation_portfolio"
+        android:name="com.example.stockbeaver.ui.portfolio.PortfolioFragment"
+        android:label="Portfolio"
+
+        tools:layout="@layout/fragment_portfolio" />
+
+
+    <fragment
+        android:id="@+id/navigation_paper"
+        android:name="com.example.stockbeaver.ui.paper.PaperFragment"
+        android:label="Paper Trading"
+        tools:layout="@layout/fragment_portfolio" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.example.stockbeaver.ui.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>
