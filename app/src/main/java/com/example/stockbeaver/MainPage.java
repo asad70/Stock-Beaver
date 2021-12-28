@@ -1,5 +1,6 @@
 package com.example.stockbeaver;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,14 +14,18 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainPage extends AppCompatActivity {
 
-private ActivityMainPageBinding binding;
+    private ActivityMainPageBinding binding;
+    public static String email;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        email = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
-     binding = ActivityMainPageBinding.inflate(getLayoutInflater());
-     setContentView(binding.getRoot());
+        binding = ActivityMainPageBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each

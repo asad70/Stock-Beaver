@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_watchlist"
-        android:name="com.example.stockbeaver.ui.watchlist.WatchlistFragment"
+        android:name="com.example.stockbeaver.WatchlistFragment"
         android:label="Watchlist"
         tools:layout="@layout/fragment_watchlist" />
 
