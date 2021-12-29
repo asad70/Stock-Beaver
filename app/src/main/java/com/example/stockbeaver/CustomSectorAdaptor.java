@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-
 public class CustomSectorAdaptor extends ArrayAdapter<String> {
 
     private ArrayList<String> arrayOfSectors;

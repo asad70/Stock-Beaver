@@ -89,9 +89,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             BigDecimal price = stock.getQuote(true).getPrice();
             holder.price.setText(price.toString());
 
+
         } catch (Exception e) {
             e.printStackTrace();
-            holder.name.setText("Couldn't retrieve data; internet");
+            holder.name.setText("Couldn't retrieve data; internet issue");
             Log.d("Tag", String.valueOf(e));
         }
 

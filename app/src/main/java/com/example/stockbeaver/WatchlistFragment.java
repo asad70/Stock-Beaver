@@ -1,4 +1,6 @@
 package com.example.stockbeaver;
+import static androidx.recyclerview.widget.ItemTouchHelper.Callback.makeMovementFlags;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -74,9 +76,6 @@ public class WatchlistFragment extends Fragment {
                             watchList.setAdapter(recyclerAdaptor);
                         }
                     }
-
-
-
                 });
             }
         });
@@ -96,18 +95,18 @@ public class WatchlistFragment extends Fragment {
         listener = new RecyclerAdapter.RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                RecyclerView habitList = view.findViewById(R.id.watchlist_listview);
-                String clickedHabit = (String) stockName.get(position); //Getting name of habit
-                //Intent intent = new Intent(getActivity(), watchListInfo.class); //Adding habit name to intent
-                //intent.putExtra(MainActivity.EXTRA_MESSAGE + "1", clickedHabit);
-                //startActivity(intent);
+                RecyclerView watchList = view.findViewById(R.id.watchlist_listview);
+                String clickedStock = (String) stockName.get(position); //Getting name of stock
+                Intent intent = new Intent(getActivity(), ViewStockDetail.class); //Adding stock name to intent
+                intent.putExtra(MainActivity.EXTRA_MESSAGE + "1", clickedStock);
+                startActivity(intent);
             }
         };
     }
 
+
     // move around watchlist item
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN |
-            ItemTouchHelper.START | ItemTouchHelper.END, 0) {
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT, 0) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
 
@@ -122,7 +121,6 @@ public class WatchlistFragment extends Fragment {
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
         }
     };
 }

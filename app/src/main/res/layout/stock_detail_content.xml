@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="3dp"
-    android:background="#F3321212">
+    android:background="#F3D8C5C5">
 
     <TextView
-        android:id="@+id/sector_name"
+        android:id="@+id/detail_name"
         android:layout_width="263dp"
         android:layout_height="28dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="7dp"
         android:layout_marginBottom="7dp"
         android:text="TextView"
-        android:textColor="#FFFFFF"
+        android:textColor="#0C0808"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,21 +23,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/sector_performance"
+        android:id="@+id/detail_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:layout_marginEnd="36dp"
         android:layout_marginBottom="5dp"
         android:text="TextView"
-        android:textColor="#FFFFFF"
+        android:textColor="#0C0808"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.659"
-        app:layout_constraintStart_toEndOf="@+id/sector_name"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.6" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

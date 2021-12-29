@@ -21,6 +21,9 @@
             android:name=".Signup"
             android:label="@string/app_name" />
         <activity
+            android:name=".ViewStockDetail"
+            android:label="@string/app_name" />
+        <activity
             android:name=".AddStockWatchlist"
             android:label="@string/app_name" />
         <activity
