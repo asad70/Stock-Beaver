@@ -1,48 +1,36 @@
 package com.example.stockbeaver;
-
+import android.os.Build;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Source;
-
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import yahoofinance.Stock;
+import yahoofinance.YahooFinance;
+
 
 /**
- * RecyclerAdaptor deals with progressbar as well as the editevent details
+ * RecyclerAdaptor deals with watchlist data
  */
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
 
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    String email = MainPage.email;
-    Source source = Source.SERVER;
-
-    private ArrayList<String> habitNames;
+    private ArrayList<String> stockNames;
     private RecyclerViewClickListener listener;
 
     /**
      * initializes habitNames and listener
-     * @param habitNames
+     * @param stockNames
      * @param listener
      */
-    public  RecyclerAdapter(ArrayList<String> habitNames, RecyclerViewClickListener listener){
-        this.habitNames = habitNames;
+    public  RecyclerAdapter(ArrayList<String> stockNames, RecyclerViewClickListener listener){
+        this.stockNames = stockNames;
         this.listener = listener;
     }
 
@@ -58,7 +46,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
          */
         public MyViewHolder(final View view){
             super(view);
-            ticker = view.findViewById(R.id.stockTicker_watchlist);
+            ticker = view.findViewById(R.id.sector_name);
             name = view.findViewById(R.id.stockName_watchlist);
             price = view.findViewById(R.id.price_watchlist);
             perc = view.findViewById(R.id.dailyPerc_watchlist);
@@ -78,16 +66,43 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         return new MyViewHolder(itemView);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        String symbol = stockNames.get(position);
+        holder.ticker.setText(symbol);
 
+        // set company data
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            // name
+            Stock stock = YahooFinance.get(symbol);
+            String compName = stock.getName();
+            holder.name.setText(compName);
+
+            // change
+            BigDecimal change = stock.getQuote().getChangeInPercent();
+            holder.perc.setText(change.toString());
+
+            // price
+            BigDecimal price = stock.getQuote(true).getPrice();
+            holder.price.setText(price.toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            holder.name.setText("Couldn't retrieve data; internet");
+            Log.d("Tag", String.valueOf(e));
+        }
+
+        // set company price
+        
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return stockNames.size();
     }
-
 
     public interface RecyclerViewClickListener{
         void onClick(View view, int position);

@@ -58,27 +58,7 @@ public class UserFirebase {
                 }
             }
         });
-        final CollectionReference collectionReference = rootRef.collection("user");
-        collectionReference.document("email").get(source).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()) {
-                    DocumentSnapshot documentSnapshot = task.getResult();
-                    if(documentSnapshot.exists()) {
-                        Map<String, Object> map = documentSnapshot.getData();
-                        ArrayList<String> watchList = new ArrayList<>(map.keySet());
-                        for(int i = 0; i < watchList.size(); i++) {
-                            Log.d("watch",watchList.get(i));
-                        }
-                        Log.d("watch","123");
-                        userInterface.getUserInterface(watchList);
-                    }
-                }
-                else {
-                    Log.d("watch","13");
-                }
-            }
-        });
+
     }
 
     public void addNewTrade(TradeInfo trade, String compSymbol){
