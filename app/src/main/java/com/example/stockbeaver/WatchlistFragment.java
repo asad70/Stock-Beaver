@@ -1,5 +1,4 @@
 package com.example.stockbeaver;
-import static androidx.recyclerview.widget.ItemTouchHelper.Callback.makeMovementFlags;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,6 +25,8 @@ public class WatchlistFragment extends Fragment {
     ArrayList<String> stockName = new ArrayList<>();
     FloatingActionButton addStockWatchList;
     private RecyclerAdapter.RecyclerViewClickListener listener;
+    public String clickedStock;
+
 
 
     @Nullable
@@ -95,9 +96,8 @@ public class WatchlistFragment extends Fragment {
         listener = new RecyclerAdapter.RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                RecyclerView watchList = view.findViewById(R.id.watchlist_listview);
-                String clickedStock = (String) stockName.get(position); //Getting name of stock
-                Intent intent = new Intent(getActivity(), ViewStockDetail.class); //Adding stock name to intent
+                clickedStock = (String) stockName.get(position); //Getting name of stock
+                Intent intent = new Intent(getActivity(), companyInfoTabs.class); //Adding stock name to intent
                 intent.putExtra(MainActivity.EXTRA_MESSAGE + "1", clickedStock);
                 startActivity(intent);
             }
@@ -115,12 +115,13 @@ public class WatchlistFragment extends Fragment {
 
             Collections.swap(stockName, fromPosition, toPosition);
             recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
-
             return false;
         }
 
         @Override
-        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+        public void onSwiped( @NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
         }
+
     };
 }

@@ -14,6 +14,16 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_activity_company_info">companyInfo</string>
+    <string name="tab_text_1">Current</string>
+    <string name="tab_text_2">Fundamental</string>
+    <string name="tab_text_3">News</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fundamental">Fundamental</string>
+    <string name="news">News</string>
+    <string name="current">Current</string>
 
 
 </resources>

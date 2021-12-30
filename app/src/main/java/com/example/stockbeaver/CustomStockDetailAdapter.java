@@ -14,15 +14,17 @@ import java.util.ArrayList;
 
 public class CustomStockDetailAdapter extends ArrayAdapter<String> {
 
-    private ArrayList<String> arrayOfDetail;
-    private ArrayList<String> arrayOfDetailData;
+    private ArrayList<String> arrayOfNames;
+    private ArrayList<String> arrayOfNameData;
     Context context;
 
-    public CustomStockDetailAdapter(ViewStockDetail context,  ArrayList<String> arrayOfDetail, ArrayList<String> arrayOfDetailData){
-        super(context, 0, arrayOfDetail);
-        this.arrayOfDetail = arrayOfDetail;
-        this.arrayOfDetailData = arrayOfDetailData;
+    public CustomStockDetailAdapter(Context context,  ArrayList<String> arrayOfNames, ArrayList<String> arrayOfNameData){
+        super(context, 0, arrayOfNames);
+        this.arrayOfNames = arrayOfNames;
+        this.arrayOfNameData = arrayOfNameData;
         this.context = context;    }
+
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -36,8 +38,8 @@ public class CustomStockDetailAdapter extends ArrayAdapter<String> {
         TextView detailName = convertView.findViewById(R.id.detail_name);
         TextView detailPerformance = convertView.findViewById(R.id.detail_data);
         // Populate the data into the template view using the data object
-        detailName.setText(arrayOfDetail.get(position));
-        detailPerformance.setText(arrayOfDetailData.get(position));
+        detailName.setText(arrayOfNames.get(position));
+        detailPerformance.setText(arrayOfNameData.get(position));
 
         // Return the completed view to render on screen
         return convertView;

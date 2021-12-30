@@ -3,18 +3,14 @@ package com.example.stockbeaver;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+
+import android.os.StrictMode;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
-import org.w3c.dom.Text;
-
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,13 +26,13 @@ public class AddStockWatchlist extends AppCompatActivity {
     ListView sectorList;
     TextView sectorName;
     TextView sectorPerformance;
-    ArrayAdapter sectorAdapter;
-    ArrayList<String> sectorDataList;
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_watchlist);
+
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         sectorList = findViewById(R.id.sector_list);
@@ -53,6 +49,8 @@ public class AddStockWatchlist extends AppCompatActivity {
         AlphaVantageConnector apiConnector = new AlphaVantageConnector(apiKey, timeout);
         SectorPerformances sectorPerformances = new SectorPerformances(apiConnector);
         try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
             Sectors response = sectorPerformances.sector();
             Map<String, String> metaData = response.getMetaData();
             List<SectorData> sectors = response.getSectors();
@@ -79,6 +77,7 @@ public class AddStockWatchlist extends AppCompatActivity {
         // Attach the adapter to a ListView
         ListView listView = findViewById(R.id.sector_list);
         listView.setAdapter(adapter);
+
     }
 
 
@@ -88,5 +87,6 @@ public class AddStockWatchlist extends AppCompatActivity {
         startActivityForResult(myIntent, 0);
         return true;
     }
+
 }
 

@@ -1,51 +1,60 @@
 package com.example.stockbeaver;
 
+
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.util.Log;
-import android.view.MenuItem;
-import android.widget.ListView;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
+import android.os.StrictMode;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import io.github.mainstringargs.alphavantagescraper.AlphaVantageConnector;
-import io.github.mainstringargs.alphavantagescraper.SectorPerformances;
 import io.github.mainstringargs.alphavantagescraper.TimeSeries;
-import io.github.mainstringargs.alphavantagescraper.input.timeseries.Interval;
 import io.github.mainstringargs.alphavantagescraper.input.timeseries.OutputSize;
 import io.github.mainstringargs.alphavantagescraper.output.AlphaVantageException;
 import io.github.mainstringargs.alphavantagescraper.output.timeseries.Daily;
-import io.github.mainstringargs.alphavantagescraper.output.timeseries.IntraDay;
 import io.github.mainstringargs.alphavantagescraper.output.timeseries.data.StockData;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 
-public class ViewStockDetail extends AppCompatActivity {
-    public static String clickedStock;
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link currentInfoFrag#} factory method to
+ * create an instance of this fragment.
+ */
+public class currentInfoFrag extends Fragment {
+    Context context;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_stock_detail);
-        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_company_info, container, false);
 
-        Intent intent = getIntent();
-        clickedStock = intent.getStringExtra(MainActivity.EXTRA_MESSAGE+"1");
+        context = container.getContext();
+
+        //Intent intent = getIntent();
+        //clickedStock = intent.getStringExtra(MainActivity.EXTRA_MESSAGE+"1");
+
+        String clickedStock = "PLTR";
+        Log.d("Tagclicked", clickedStock);
 
         // set the app bar title to name of company else to symbol
         Stock stocks = null;
@@ -56,9 +65,8 @@ public class ViewStockDetail extends AppCompatActivity {
             stocks = YahooFinance.get(clickedStock);
             compName = stocks.getName();
 
-            setTitle(compName);
         } catch (IOException e) {
-            setTitle(clickedStock);
+            //setTitle(clickedStock);
             e.printStackTrace();
         }
 
@@ -81,10 +89,10 @@ public class ViewStockDetail extends AppCompatActivity {
                 if (arrayOfNameData.size() < 5){
                     arrayOfNameData.add(String.valueOf(stock.getDateTime()).substring(0,10));
                     arrayOfNameData.add(String.valueOf(stock.getOpen()));
-                arrayOfNameData.add(String.valueOf(stock.getHigh()));
-                arrayOfNameData.add(String.valueOf(stock.getLow()));
-                arrayOfNameData.add(String.valueOf(stock.getClose()));
-                arrayOfNameData.add(String.valueOf(stock.getVolume()));
+                    arrayOfNameData.add(String.valueOf(stock.getHigh()));
+                    arrayOfNameData.add(String.valueOf(stock.getLow()));
+                    arrayOfNameData.add(String.valueOf(stock.getClose()));
+                    arrayOfNameData.add(String.valueOf(stock.getVolume()));
                 }
             });
         } catch (AlphaVantageException e) {
@@ -93,16 +101,12 @@ public class ViewStockDetail extends AppCompatActivity {
 
 
         // Create the adapter to convert the array to views
-        CustomStockDetailAdapter adapter = new CustomStockDetailAdapter(this, arrayOfNames, arrayOfNameData);
+        CustomStockDetailAdapter adapter = new CustomStockDetailAdapter(context, arrayOfNames, arrayOfNameData);
         // Attach the adapter to a ListView
-        ListView listView = findViewById(R.id.stock_detail_listview);
+        ListView listView = v.findViewById(R.id.stock_detail_listview);
         listView.setAdapter(adapter);
+
+        return v;
     }
 
-    // show back menu
-    public boolean onOptionsItemSelected(MenuItem item){
-        Intent myIntent = new Intent(getApplicationContext(), MainPage.class);
-        startActivityForResult(myIntent, 0);
-        return true;
-    }
 }
