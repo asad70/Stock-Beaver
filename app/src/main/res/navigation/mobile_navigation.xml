@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_portfolio"
-        android:name="com.example.stockbeaver.ui.portfolio.PortfolioFragment"
+        android:name="com.example.stockbeaver.PortfolioFragment"
         android:label="Portfolio"
 
         tools:layout="@layout/fragment_portfolio" />

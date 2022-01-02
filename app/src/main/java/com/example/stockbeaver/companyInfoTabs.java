@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.stockbeaver.ui.main.SectionsPagerAdapter;
 import com.example.stockbeaver.databinding.ActivityCompanyInfoBinding;
@@ -28,18 +30,8 @@ public class companyInfoTabs extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Intent intent = getIntent();
-        String clickedStock = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "1");
-        // passing clicked stock to fragment
-        Bundle bundle = new Bundle();
-        bundle.putString("stocktosearch", clickedStock);
-        currentInfoFrag fragobj = new currentInfoFrag();
-        fragobj.setArguments(bundle);
-
         binding = ActivityCompanyInfoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = binding.viewPager;
         viewPager.setAdapter(sectionsPagerAdapter);
@@ -47,5 +39,6 @@ public class companyInfoTabs extends AppCompatActivity {
         tabs.setupWithViewPager(viewPager);
 
     }
+
 
 }

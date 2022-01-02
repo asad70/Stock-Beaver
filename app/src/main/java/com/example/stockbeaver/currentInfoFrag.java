@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,9 +26,13 @@ import java.util.List;
 import java.util.Map;
 
 import io.github.mainstringargs.alphavantagescraper.AlphaVantageConnector;
+import io.github.mainstringargs.alphavantagescraper.StockQuotes;
 import io.github.mainstringargs.alphavantagescraper.TimeSeries;
+import io.github.mainstringargs.alphavantagescraper.input.Function;
 import io.github.mainstringargs.alphavantagescraper.input.timeseries.OutputSize;
 import io.github.mainstringargs.alphavantagescraper.output.AlphaVantageException;
+import io.github.mainstringargs.alphavantagescraper.output.quote.StockQuotesResponse;
+import io.github.mainstringargs.alphavantagescraper.output.quote.data.StockQuote;
 import io.github.mainstringargs.alphavantagescraper.output.timeseries.Daily;
 import io.github.mainstringargs.alphavantagescraper.output.timeseries.data.StockData;
 import yahoofinance.Stock;
@@ -50,11 +55,8 @@ public class currentInfoFrag extends Fragment {
 
         context = container.getContext();
 
-        //Intent intent = getIntent();
-        //clickedStock = intent.getStringExtra(MainActivity.EXTRA_MESSAGE+"1");
-
-        String clickedStock = "PLTR";
-        Log.d("Tagclicked", clickedStock);
+        Intent intent = getActivity().getIntent();
+        String clickedStock = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "1");
 
         // set the app bar title to name of company else to symbol
         Stock stocks = null;
@@ -71,30 +73,29 @@ public class currentInfoFrag extends Fragment {
         }
 
         // detail list
-        ArrayList<String> arrayOfNames = new ArrayList<String>(Arrays.asList("Date", "Open", "High", "Low", "Close", "Volume"));
+        ArrayList<String> arrayOfNames = new ArrayList<String>(Arrays.asList("Latest Trading Day", "Open", "High", "Low", "Change" , "Change %", "Previous Close", "Volume"));
         ArrayList<String> arrayOfNameData = new ArrayList<String>();
 
         // get the stock daily data.
         String apiKey = "B0LKVW4P80ZWF54E";
         int timeout = 10000;
         AlphaVantageConnector apiConnector = new AlphaVantageConnector(apiKey, timeout);
-        TimeSeries stockTimeSeries = new TimeSeries(apiConnector);
+        StockQuotes stockQuotes = new StockQuotes(apiConnector);
+
+
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            Daily response = stockTimeSeries.daily(clickedStock, OutputSize.COMPACT);
-            Map<String, String> metaData = response.getMetaData();
-            List<StockData> stockData = response.getStockData();
-            stockData.forEach(stock -> {
-                if (arrayOfNameData.size() < 5){
-                    arrayOfNameData.add(String.valueOf(stock.getDateTime()).substring(0,10));
-                    arrayOfNameData.add(String.valueOf(stock.getOpen()));
-                    arrayOfNameData.add(String.valueOf(stock.getHigh()));
-                    arrayOfNameData.add(String.valueOf(stock.getLow()));
-                    arrayOfNameData.add(String.valueOf(stock.getClose()));
-                    arrayOfNameData.add(String.valueOf(stock.getVolume()));
-                }
-            });
+            StockQuotesResponse response = stockQuotes.quote(clickedStock);
+            StockQuote stock = response.getStockQuote();
+            arrayOfNameData.add(String.valueOf(stock.getLatestTradingDay()));
+            arrayOfNameData.add(String.valueOf(stock.getOpen()));
+            arrayOfNameData.add(String.valueOf(stock.getHigh()));
+            arrayOfNameData.add(String.valueOf(stock.getLow()));
+            arrayOfNameData.add(String.valueOf(stock.getChange()));
+            arrayOfNameData.add(String.valueOf(stock.getChangePercent()));
+            arrayOfNameData.add(String.valueOf(stock.getPreviousClose()));
+            arrayOfNameData.add(String.valueOf(stock.getVolume()));
         } catch (AlphaVantageException e) {
             System.out.println("something went wrong");
         }

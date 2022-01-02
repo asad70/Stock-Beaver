@@ -23,21 +23,19 @@ import java.util.Map;
 public class UserFirebase {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     interface UserInterface {
-        void getUserInterface(ArrayList<String> watchlistArrayList);
+        void getUserInterfaceWatchList(ArrayList<String> watchlistArrayList);
+        void getPortfolio(Map<String, Object> portfolioMap);
     }
 
 
     public UserFirebase() {
     }
 
-
     public FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
-    //Switch over to Events collection once completed
-//    final CollectionReference collectionReference = rootRef.collection("Events");
     private final String email = MainPage.email;
     Source source = Source.SERVER;
 
-
+    // gets the list of watchlist from firebase
     public void getListOfWatchList(UserInterface userInterface){
         DocumentReference docRef = db.collection("users").document("email");
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -48,7 +46,32 @@ public class UserFirebase {
                     if (document.exists()) {
                         Log.d("TAG", "DocumentSnapshot data: " + document.get("watchlist"));
                         ArrayList<String> watchList = (ArrayList<String>) document.get("watchlist");
-                        userInterface.getUserInterface(watchList);
+                        userInterface.getUserInterfaceWatchList(watchList);
+
+                    } else {
+                        Log.d("TAG", "No such document");
+                    }
+                } else {
+                    Log.d("TAG", "get failed with ", task.getException());
+                }
+            }
+        });
+
+    }
+
+    // gets the list of portfolio from firebase
+    public void getPortfolio(UserInterface userInterface){
+        DocumentReference docRef = db.collection("portfolio").document("email");
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Map<String, Object> map = document.getData();
+                        Log.d("Map", map.toString());
+                        if(map == null) return;
+                        userInterface.getPortfolio(map);
 
                     } else {
                         Log.d("TAG", "No such document");

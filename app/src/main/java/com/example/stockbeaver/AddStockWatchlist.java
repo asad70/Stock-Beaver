@@ -36,7 +36,7 @@ public class AddStockWatchlist extends AppCompatActivity {
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         sectorList = findViewById(R.id.sector_list);
-        sectorName = findViewById(R.id.sector_name);
+        sectorName = findViewById(R.id.company_symbol);
         sectorPerformance = findViewById(R.id.sector_performance);
 
         // sectors list

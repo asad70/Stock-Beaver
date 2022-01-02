@@ -1,4 +1,5 @@
 package com.example.stockbeaver;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.StrictMode;
 import android.util.Log;
@@ -46,7 +47,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
          */
         public MyViewHolder(final View view){
             super(view);
-            ticker = view.findViewById(R.id.sector_name);
+            ticker = view.findViewById(R.id.company_symbol);
             name = view.findViewById(R.id.stockName_watchlist);
             price = view.findViewById(R.id.price_watchlist);
             perc = view.findViewById(R.id.dailyPerc_watchlist);
@@ -83,7 +84,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
             // change
             BigDecimal change = stock.getQuote().getChangeInPercent();
-            holder.perc.setText(change.toString());
+            if (change.compareTo(BigDecimal.ZERO) < 0){
+                holder.perc.setTextColor(Color.RED);
+
+            }
+            else {
+                holder.perc.setTextColor(Color.GREEN);
+            }
+            String temp = change.toString().concat("%");
+            holder.perc.setText(String.format("  %s  ", temp));
 
             // price
             BigDecimal price = stock.getQuote(true).getPrice();
@@ -96,8 +105,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             Log.d("Tag", String.valueOf(e));
         }
 
-        // set company price
-        
+
     }
 
     @Override

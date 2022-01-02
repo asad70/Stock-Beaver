@@ -8,7 +8,7 @@
     android:background="#F3321212">
 
     <TextView
-        android:id="@+id/sector_name"
+        android:id="@+id/company_symbol"
         android:layout_width="263dp"
         android:layout_height="28dp"
         android:layout_marginStart="16dp"
@@ -35,7 +35,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.659"
-        app:layout_constraintStart_toEndOf="@+id/sector_name"
+        app:layout_constraintStart_toEndOf="@+id/company_symbol"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 

@@ -35,7 +35,7 @@ public class CustomSectorAdaptor extends ArrayAdapter<String> {
         String sectorNames = getItem(position);
 
         // Lookup view for data population
-        TextView sectorName = convertView.findViewById(R.id.sector_name);
+        TextView sectorName = convertView.findViewById(R.id.company_symbol);
         TextView sectorPerformance = convertView.findViewById(R.id.sector_performance);
         // Populate the data into the template view using the data object
         sectorName.setText(arrayOfSectors.get(position));

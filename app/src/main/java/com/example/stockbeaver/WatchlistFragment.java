@@ -13,11 +13,10 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 
 public class WatchlistFragment extends Fragment {
 
@@ -39,7 +38,7 @@ public class WatchlistFragment extends Fragment {
         UserFirebase userFirebase = new UserFirebase();
         userFirebase.getListOfWatchList(new UserFirebase.UserInterface() {
             @Override
-            public void getUserInterface(ArrayList<String> watchlistArrayList) {
+            public void getUserInterfaceWatchList(ArrayList<String> watchlistArrayList) {
                 if(getActivity() != null) {
                     stockName = watchlistArrayList;
                     setOnClickListener();
@@ -49,6 +48,10 @@ public class WatchlistFragment extends Fragment {
                     watchList.setItemAnimator(new DefaultItemAnimator());
                     watchList.setAdapter(recyclerAdaptor);
                 }
+            }
+
+            @Override
+            public void getPortfolio(Map<String, Object> hashMap) {
             }
 
         });
@@ -62,31 +65,12 @@ public class WatchlistFragment extends Fragment {
             }
         });
 
-        userFirebase.rootRef.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                userFirebase.getListOfWatchList(new UserFirebase.UserInterface() {
-                    public void getUserInterface(ArrayList<String> watchlistArrayList) {
-                        if(getActivity() != null) {
-                            stockName = watchlistArrayList;
-                            setOnClickListener();
-                            RecyclerAdapter recyclerAdaptor = new RecyclerAdapter(watchlistArrayList, listener);
-                            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-                            watchList.setLayoutManager(layoutManager);
-                            watchList.setItemAnimator(new DefaultItemAnimator());
-                            watchList.setAdapter(recyclerAdaptor);
-                        }
-                    }
-                });
-            }
-        });
+
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(watchList);
         return view;
     }
-
-
 
 
     /**
