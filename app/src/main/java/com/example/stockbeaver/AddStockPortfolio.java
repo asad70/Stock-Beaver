@@ -35,13 +35,13 @@ public class AddStockPortfolio extends AppCompatActivity implements AddPortfolio
             super.onCreate(savedInstanceState);
             setContentView(R.layout.fragment_portfolio);
             mOpenDialog = findViewById(R.id.fab_add_portfolio);
-
             mOpenDialog.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Log.d(TAG, "onClick: opening dialog.");
                     AddPortfolioDialogFrag dialog = new AddPortfolioDialogFrag();
                     dialog.show(getFragmentManager(), "AddPortfolioDialogFrag");
+
                 }
             });
 

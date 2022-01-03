@@ -66,7 +66,6 @@ public class WatchlistFragment extends Fragment {
         });
 
 
-
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(watchList);
         return view;

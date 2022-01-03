@@ -2,25 +2,20 @@ package com.example.stockbeaver;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.util.List;
-import com.google.gson.Gson;
+import yahoofinance.Stock;
+import yahoofinance.YahooFinance;
+
 
 public class AddPortfolioDialogFrag extends DialogFragment {
 
@@ -41,15 +36,28 @@ public class AddPortfolioDialogFrag extends DialogFragment {
     private Button mActionOk, mActionCancel;
 
 
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.add_porfolio_dialog, container, false);
+        Context c = getActivity().getApplicationContext();
         mActionCancel = view.findViewById(R.id.cancel_add_port);
         mActionOk = view.findViewById(R.id.add_port);
         symbol = view.findViewById(R.id.portfolioSearch);
         size = view.findViewById(R.id.postition_size);
         price = view.findViewById(R.id.position_price);
+
+
+        AutoCompleteTextView autoComplete = (AutoCompleteTextView) view.findViewById(R.id.portfolioSearch);
+        autoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long rowId) {
+                String selection = (String)parent.getItemAtPosition(position);
+                selection  = selection.split("\n")[0];
+                autoComplete.setText(selection);
+            }
+        });
 
 
         mActionCancel.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +69,6 @@ public class AddPortfolioDialogFrag extends DialogFragment {
             }
         });
 
-
         mActionOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,29 +76,40 @@ public class AddPortfolioDialogFrag extends DialogFragment {
                 String input_size = size.getText().toString();
                 String input_price = price.getText().toString();
 
+                if(!input_symbol.equals("")){
+                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                    StrictMode.setThreadPolicy(policy);
 
-                URL url = new URL("https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=tesco&apikey=demo");
-                Gson gson = new Gson();
+                    try {
+                        Stock stock = YahooFinance.get(input_symbol);
+                        Log.d("Tagname", stock.getName());
 
-                String json = readUrl("http://api.wunderground.com/api/57dd9039b81a9c21/conditions/q/CA/San_Francisco.json");
+                        input_symbol = input_symbol.toUpperCase();
+                        String toastOutput = input_symbol + " added to the portfolio for price of " + input_price + " per share. Total share(s): " + input_size;
+                        if (!input_symbol.equals("") && !input_size.equals("") && !input_price.equals("")) {
 
-                // Page page = gson.fromJson(json, Page.class);
-                Response response = gson.fromJson(json, Response.class);
+                            TradeInfo trade = new TradeInfo(input_symbol.toUpperCase(), input_size, input_price, "Public");
+                            UserFirebase userFirebase = new UserFirebase();
+                            userFirebase.addNewTrade(trade, input_symbol);
 
-                String toastOutput = input_symbol.toUpperCase() + " added to the portfolio for price of " + input_price + " per share. Total share(s): " + input_size;
+                            Toast.makeText(getActivity(), toastOutput,
+                                    Toast.LENGTH_LONG).show();
 
-                if(!input_symbol.equals("") && !input_size.equals("") && !input_price.equals("")){
-                    Toast.makeText(getActivity(), toastOutput,
-                            Toast.LENGTH_LONG).show();
+                            //Easiest way: just set the value
+                            //((MainActivity)getActivity()).mInputDisplay.setText(input);
 
-                    //Easiest way: just set the value
-                    //((MainActivity)getActivity()).mInputDisplay.setText(input);
+                            getDialog().dismiss();
+                        } else {
+                            Toast.makeText(getActivity(), "All field are Required",
+                                    Toast.LENGTH_LONG).show();
+                        }
 
-                    getDialog().dismiss();
-                }
-                else {
-                    Toast.makeText(getActivity(), "All field are Required",
-                            Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), "Ticker isn't valid",
+                                Toast.LENGTH_LONG).show();
+                        Log.d("Tagfail", e.getMessage());
+                        e.printStackTrace();
+                    }
                 }
 
                 //"Best Practice" but it takes longer
@@ -101,6 +119,7 @@ public class AddPortfolioDialogFrag extends DialogFragment {
                 getDialog().dismiss();*/
             }
         });
+
 
         return view;
     }
@@ -118,5 +137,7 @@ public class AddPortfolioDialogFrag extends DialogFragment {
         }
     }
 }
+
+
 
 

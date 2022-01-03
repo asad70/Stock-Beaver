@@ -7,18 +7,18 @@ import java.util.ArrayList;
 public class TradeInfo {
 
     private String compSymbol;
-    private int positionSize;
-    private String compName;
+    private String positionSize;
+    private String price;
     private String privacy; //Public or private status for postion; social
 
 
     /**
      * Holds all parameters for TradeInfo
      */
-    public TradeInfo(String compSymbol, Integer positionSize, String compName,  String privacy) {
+    public TradeInfo(String compSymbol, String positionSize, String price,  String privacy) {
         this.compSymbol = compSymbol;
         this.positionSize = positionSize;
-        this.compName = compName;
+        this.price = price;
         this.privacy = privacy;
     }
 
@@ -31,20 +31,20 @@ public class TradeInfo {
         this.compSymbol = compSymbol;
     }
 
-    public int getPositionSize() {
+    public String getPositionSize() {
         return positionSize;
     }
 
-    public void setPositionSize(int positionSize) {
+    public void setPositionSize(String positionSize) {
         this.positionSize = positionSize;
     }
 
-    public String getCompName() {
-        return compName;
+    public String getPrice() {
+        return price;
     }
 
-    public void setCompName(String compName) {
-        this.compName = compName;
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     public String getPrivacy() {
