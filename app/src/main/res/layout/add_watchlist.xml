@@ -5,18 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <SearchView
-        android:id="@+id/search_watchlist"
-        android:layout_width="396dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="4dp"
-        android:background="#EFE6E6"
-        app:iconifiedByDefault="false"
-        android:queryHint="Add to WatchList"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.466"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/sector_list"
@@ -45,6 +33,29 @@
         app:layout_constraintTop_toBottomOf="@+id/search_watchlist"
         app:layout_constraintVertical_bias="0.0" />
 
+    <AutoCompleteTextView
+        android:id="@+id/search_watchlist"
+        android:layout_width="273dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="16dp"
+        android:background="#EFE6E6"
+        android:hint=" Add to WatchList "
+        app:layout_constraintEnd_toStartOf="@+id/add_watchlist"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/add_watchlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="3dp"
+        android:text="Add"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

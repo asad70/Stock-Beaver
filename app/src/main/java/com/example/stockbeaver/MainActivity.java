@@ -1,12 +1,13 @@
 package com.example.stockbeaver;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class MainActivity extends AppCompatActivity {
-    public static final String EXTRA_MESSAGE = "com.example.zoomsoft";
+    public static final String EXTRA_MESSAGE = "com.example.stockbeaver";
     protected Button loginButton;
     protected Button registerButton;
 

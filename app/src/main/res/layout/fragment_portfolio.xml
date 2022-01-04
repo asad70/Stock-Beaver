@@ -66,8 +66,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/portfolio_listview"
         android:layout_width="405dp"
-        android:layout_height="592dp"
+        android:layout_height="370dp"
         android:layout_marginTop="12dp"
+        android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.166"
         app:layout_constraintStart_toStartOf="parent"

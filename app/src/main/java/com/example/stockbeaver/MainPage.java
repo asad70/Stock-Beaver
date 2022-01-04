@@ -14,15 +14,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainPage extends AppCompatActivity {
 
-    private ActivityMainPageBinding binding;
     public static String email;
-
+    private ActivityMainPageBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        email = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        email = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "email");
 
         binding = ActivityMainPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -36,7 +35,6 @@ public class MainPage extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main_page);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
-
     }
 
 }

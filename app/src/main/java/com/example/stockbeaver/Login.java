@@ -33,6 +33,8 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(Login.this, MainPage.class);
+                String email = emailEditText.getText().toString();
+                myIntent.putExtra(MainActivity.EXTRA_MESSAGE + "email", email);
                 startActivity(myIntent);
             }
         });

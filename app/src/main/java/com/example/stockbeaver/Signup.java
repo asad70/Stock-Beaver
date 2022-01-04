@@ -31,6 +31,8 @@ public class Signup extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(Signup.this, com.example.stockbeaver.MainActivity.class);
+                String email = emailEditText.getText().toString();
+                myIntent.putExtra(MainActivity.EXTRA_MESSAGE + "email", email);
                 startActivity(myIntent);
             }
         });

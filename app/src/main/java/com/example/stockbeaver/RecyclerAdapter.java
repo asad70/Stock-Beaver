@@ -2,16 +2,18 @@ package com.example.stockbeaver;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
+
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 
@@ -89,7 +91,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
             }
             else {
-                holder.perc.setTextColor(Color.GREEN);
+                holder.perc.setTextColor(Color.rgb(0,128,0));
             }
             String temp = change.toString().concat("%");
             holder.perc.setText(String.format("  %s  ", temp));
@@ -102,8 +104,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         } catch (Exception e) {
             e.printStackTrace();
             holder.name.setText("Couldn't retrieve data; internet issue");
-            Log.d("Tag", String.valueOf(e));
         }
+
 
 
     }

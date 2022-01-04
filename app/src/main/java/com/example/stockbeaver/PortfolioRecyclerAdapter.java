@@ -3,7 +3,6 @@ package com.example.stockbeaver;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import yahoofinance.Stock;
@@ -115,7 +113,7 @@ public class PortfolioRecyclerAdapter  extends RecyclerView.Adapter<PortfolioRec
                 holder.dailyPerc.setTextColor(Color.RED);
             }
             else {
-                holder.dailyPerc.setTextColor(Color.GREEN);
+                holder.dailyPerc.setTextColor(Color.rgb(0,128,0));
             }
             String temp = change.toString().concat("%");
             holder.dailyPerc.setText(String.format("  %s  ", temp));
@@ -149,7 +147,6 @@ public class PortfolioRecyclerAdapter  extends RecyclerView.Adapter<PortfolioRec
         } catch (Exception e) {
             e.printStackTrace();
             holder.totalPerc.setText("Error");
-            Log.d("Tag", String.valueOf(e));
         }
 
 
