@@ -28,7 +28,7 @@ public class PortfolioRecyclerAdapter  extends RecyclerView.Adapter<PortfolioRec
     private PortfolioRecyclerAdapter.RecyclerViewClickListener listener;
 
     /**
-     * initializes habitNames and listener
+     * initializes stockNames and listener
      *
      * @param stockNames
      * @param hashMap

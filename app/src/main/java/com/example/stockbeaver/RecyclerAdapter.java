@@ -28,7 +28,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     private RecyclerViewClickListener listener;
 
     /**
-     * initializes habitNames and listener
+     * initializes stocknames and listener
      * @param stockNames
      * @param listener
      */
