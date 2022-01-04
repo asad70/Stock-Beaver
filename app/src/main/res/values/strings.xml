@@ -5,7 +5,7 @@
     <string name="signup">signup</string>
     <string name="login">login</string>
     <string name="StockBeaver">Stock Beaver</string>
-    <string name="stock_portfolio">Track your stock portfolio</string>
+    <string name="stock_portfolio">Track your portfolio | Paper Trading</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
     <string name="register">Register</string>

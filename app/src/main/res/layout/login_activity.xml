@@ -28,11 +28,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="20dp"
-        android:text="Let's help you track your stock portfolio"
+        android:text="Let's help you track your portfolio | Technical and Fundamental Analysis"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/welcome"
         app:layout_constraintStart_toStartOf="@+id/welcome"
         app:layout_constraintTop_toBottomOf="@+id/welcome" />
