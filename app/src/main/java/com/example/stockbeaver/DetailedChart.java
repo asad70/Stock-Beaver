@@ -1,16 +1,12 @@
 package com.example.stockbeaver;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.MenuItem;
 import android.webkit.WebView;
 
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,27 +14,20 @@ import java.io.InputStream;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link fundamentalInfoFrag} factory method to
- * create an instance of this fragment.
- */
-public class fundamentalInfoFrag extends Fragment {
-    Context context;
+public class DetailedChart extends AppCompatActivity {
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_fundamental_info, container, false);
-        context = container.getContext();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.detailed_chart);
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Detailed Chart");
 
+        Intent intent = getIntent();
+        String clickedStock = intent.getStringExtra("clickedStock");
 
-        Intent intent = getActivity().getIntent();
-        String clickedStock = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "1");
-
-        // name
+        // set the webview
+        int size = 0;
         Stock stock = null;
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -51,11 +40,10 @@ public class fundamentalInfoFrag extends Fragment {
             }
 
             String ex_sym = exchange.toUpperCase() + ":" + clickedStock.toUpperCase();
-            Log.d("Tagsym", ex_sym);
 
-            InputStream is = context.getAssets().open("fundamental.html");
-            int size = is.available();
-
+            // chart
+            InputStream is = this.getAssets().open("DetailedChart.html");
+            size = is.available();
             // Read the entire asset into a local byte buffer.
             byte[] buffer = new byte[size];
             is.read(buffer);
@@ -64,26 +52,28 @@ public class fundamentalInfoFrag extends Fragment {
             // Convert the buffer into a string.
             String str = new String(buffer);
 
-            str = str.replace("XXXX", ex_sym);
-            Log.d("Tagstr", str);
-
+            str = str.replace("XXXX", ex_sym.toUpperCase());
 
             // Get a handle on your webview
-            WebView webViewHeroes = v.findViewById(R.id.fundamental);
-            webViewHeroes.getSettings().setUseWideViewPort(true);
+            WebView webViewHeroes = findViewById(R.id.detailed_chart_webview);
             webViewHeroes.getSettings().setAllowContentAccess(true);
             webViewHeroes.getSettings().setAllowFileAccess(true);
             // Populate webview with your html
             webViewHeroes.getSettings().setJavaScriptEnabled(true);
-            //webViewHeroes.loadUrl("file:///android_asset/technicalIndicator.html");
             webViewHeroes.loadDataWithBaseURL(null, str, "text/html", "UTF-8", null);
-
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return v;
 
     }
+
+    // show back menu
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent myIntent = new Intent(getApplicationContext(), companyInfoTabs.class);
+        startActivityForResult(myIntent, 0);
+        return true;
+    }
+
 }

@@ -1,40 +1,32 @@
 package com.example.stockbeaver;
 
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.widget.Button;
+import android.widget.ListView;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
-import android.os.StrictMode;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
-
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 import io.github.mainstringargs.alphavantagescraper.AlphaVantageConnector;
 import io.github.mainstringargs.alphavantagescraper.StockQuotes;
-import io.github.mainstringargs.alphavantagescraper.TimeSeries;
-import io.github.mainstringargs.alphavantagescraper.input.Function;
-import io.github.mainstringargs.alphavantagescraper.input.timeseries.OutputSize;
 import io.github.mainstringargs.alphavantagescraper.output.AlphaVantageException;
 import io.github.mainstringargs.alphavantagescraper.output.quote.StockQuotesResponse;
 import io.github.mainstringargs.alphavantagescraper.output.quote.data.StockQuote;
-import io.github.mainstringargs.alphavantagescraper.output.timeseries.Daily;
-import io.github.mainstringargs.alphavantagescraper.output.timeseries.data.StockData;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 
@@ -45,6 +37,7 @@ import yahoofinance.YahooFinance;
  */
 public class currentInfoFrag extends Fragment {
     Context context;
+    Button detailedChart;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -73,7 +66,7 @@ public class currentInfoFrag extends Fragment {
         }
 
         // detail list
-        ArrayList<String> arrayOfNames = new ArrayList<String>(Arrays.asList("Latest Trading Day", "Open", "High", "Low", "Change" , "Change %", "Previous Close", "Volume"));
+        ArrayList<String> arrayOfNames = new ArrayList<String>(Arrays.asList("Latest Trading Day", "Open", "Low/High", "Change/Change %" , "Previous Close", "Volume"));
         ArrayList<String> arrayOfNameData = new ArrayList<String>();
 
         // get the stock daily data.
@@ -90,15 +83,61 @@ public class currentInfoFrag extends Fragment {
             StockQuote stock = response.getStockQuote();
             arrayOfNameData.add(String.valueOf(stock.getLatestTradingDay()));
             arrayOfNameData.add(String.valueOf(stock.getOpen()));
-            arrayOfNameData.add(String.valueOf(stock.getHigh()));
-            arrayOfNameData.add(String.valueOf(stock.getLow()));
-            arrayOfNameData.add(String.valueOf(stock.getChange()));
-            arrayOfNameData.add(String.valueOf(stock.getChangePercent()));
+            String high = String.valueOf(stock.getHigh());
+            String low = String.valueOf(stock.getLow());
+            String highLow = low + "/" + high;
+            arrayOfNameData.add(highLow);
+            String change = String.valueOf(stock.getChange());
+            String change_perc = String.valueOf(stock.getChangePercent());
+            String change_per_both = change + "/" + String.format("%.2f", Float.parseFloat(change_perc)) + "%";
+            arrayOfNameData.add(change_per_both);
             arrayOfNameData.add(String.valueOf(stock.getPreviousClose()));
             arrayOfNameData.add(String.valueOf(stock.getVolume()));
         } catch (AlphaVantageException e) {
             System.out.println("something went wrong");
         }
+
+
+        // set the webview
+        int size = 0;
+        Stock stock = null;
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            stock = YahooFinance.get(clickedStock);
+            String exchange = stock.getStockExchange();
+
+            if (exchange.startsWith("Nasdaq")){
+                exchange = "nasdaq";
+            }
+
+            String ex_sym = exchange.toUpperCase() + ":" + clickedStock.toUpperCase();
+
+            // chart
+            InputStream is = context.getAssets().open("symbol.html");
+            size = is.available();
+            // Read the entire asset into a local byte buffer.
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+
+            // Convert the buffer into a string.
+            String str = new String(buffer);
+
+            str = str.replace("XXXX", ex_sym.toUpperCase());
+
+            // Get a handle on your webview
+            WebView webViewHeroes = v.findViewById(R.id.symbol_webview);
+            webViewHeroes.getSettings().setAllowContentAccess(true);
+            webViewHeroes.getSettings().setAllowFileAccess(true);
+            // Populate webview with your html
+            webViewHeroes.getSettings().setJavaScriptEnabled(true);
+            webViewHeroes.loadDataWithBaseURL(null, str, "text/html", "UTF-8", null);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
 
         // Create the adapter to convert the array to views
@@ -107,6 +146,18 @@ public class currentInfoFrag extends Fragment {
         ListView listView = v.findViewById(R.id.stock_detail_listview);
         listView.setAdapter(adapter);
 
+
+
+        detailedChart = v.findViewById(R.id.detailed_chart);
+        detailedChart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(getActivity(), DetailedChart.class);
+                Log.d("Tagcli",clickedStock);
+                intent1.putExtra("clickedStock", clickedStock);
+                startActivity(intent1);
+            }
+        });
         return v;
     }
 

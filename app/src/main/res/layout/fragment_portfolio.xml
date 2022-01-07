@@ -65,8 +65,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/portfolio_listview"
-        android:layout_width="405dp"
-        android:layout_height="370dp"
+        android:layout_width="408dp"
+        android:layout_height="429dp"
         android:layout_marginTop="12dp"
         android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -141,18 +141,5 @@
         app:layout_constraintBottom_toTopOf="@+id/portfolio_listview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_add_portfolio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.957"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.868"
-        app:srcCompat="@drawable/ic_baseline_add_chart_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

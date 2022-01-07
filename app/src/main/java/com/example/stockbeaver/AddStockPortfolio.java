@@ -1,11 +1,8 @@
 package com.example.stockbeaver;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class AddStockPortfolio extends AppCompatActivity{
 
@@ -18,9 +15,6 @@ public class AddStockPortfolio extends AppCompatActivity{
 
         }
 
-        //widgets
-        private FloatingActionButton mOpenDialog;
-
         //vars
         public String mSymbol;
         public String mSize;
@@ -31,14 +25,6 @@ public class AddStockPortfolio extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_portfolio);
-        mOpenDialog = findViewById(R.id.fab_add_portfolio);
-        mOpenDialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddPortfolioDialogFrag dialog = new AddPortfolioDialogFrag();
-                dialog.show(getFragmentManager(), "AddPortfolioDialogFrag");
-            }
-        });
 
     }
 

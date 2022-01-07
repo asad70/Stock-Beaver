@@ -11,8 +11,10 @@ public class User {
     private   ArrayList<String> followers = new ArrayList<>();
     private   ArrayList<String> requests = new ArrayList<>();
 
-    public User(String username) {
+    public User(String username, String Password) {
         this.username = username;
+        this.password = password;
+
     }
     public User(String email, String password, String username) {
         //This is for registration:

@@ -9,6 +9,8 @@ import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -53,6 +55,7 @@ public class PortfolioFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_portfolio, container, false);
         instance = this;
         RecyclerView portfolio = view.findViewById(R.id.portfolio_listview);
+        setHasOptionsMenu(true);
 
         UserFirebase userFirebase = new UserFirebase();
         userFirebase.getPortfolio(new UserFirebase.UserInterface() {
@@ -114,15 +117,6 @@ public class PortfolioFragment extends Fragment{
 
         });
 
-        addPortfolio = view.findViewById(R.id.fab_add_portfolio);
-        addPortfolio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager fm = getActivity().getFragmentManager();
-                AddPortfolioDialogFrag dialog = new AddPortfolioDialogFrag();
-                dialog.show(fm, "AddPortfolioDialogFrag");
-            }
-        });
         return view;
     }
     // add the trade to list / from add portfolio dialog fragment activity
@@ -177,5 +171,52 @@ public class PortfolioFragment extends Fragment{
         };
     }
 
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.add_paper_trade).setVisible(false);
+        menu.findItem(R.id.add_friend).setVisible(false);
+        menu.findItem(R.id.addWatchlist).setVisible(false);
+
+        super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) { switch(item.getItemId()) {
+        case R.id.search_company:
+            FragmentManager fm = getActivity().getFragmentManager();
+            SearchCompDialog dialog = new SearchCompDialog();
+            dialog.show(fm, "SearchCompDialog");
+            return true;
+        case R.id.add_portfolio:
+            //add the function to perform here
+            FragmentManager fm1 = getActivity().getFragmentManager();
+            AddPortfolioDialogFrag dialog1 = new AddPortfolioDialogFrag();
+            dialog1.show(fm1, "AddPortfolioDialogFrag");
+            return true;
+
+        case R.id.advance_chart:
+            Intent intent0 = new Intent(getContext(), AdvancedChart.class);
+            startActivity(intent0);
+            return true;
+        case R.id.stock_screener:
+            Intent intent1 = new Intent(getContext(), StockScreener.class);
+            startActivity(intent1);
+            return true;
+        case R.id.market_movers:
+            Intent intent2 = new Intent(getContext(), MarketMovers.class);
+            startActivity(intent2);
+            return true;
+        case R.id.market_overview:
+            Intent intent3 = new Intent(getContext(), MarketOverview.class);
+            startActivity(intent3);
+            return true;
+        case R.id.economic_calendar:
+            Intent intent4 = new Intent(getContext(), EconomicCalendar.class);
+            startActivity(intent4);
+            return true;
+
+    }
+        return(super.onOptionsItemSelected(item));
+    }
 
 }

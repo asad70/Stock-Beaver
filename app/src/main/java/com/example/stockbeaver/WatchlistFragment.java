@@ -1,11 +1,15 @@
 package com.example.stockbeaver;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,8 +20,6 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -25,7 +27,6 @@ public class WatchlistFragment extends Fragment {
 
     private String TAG = "SAMPLE";
     ArrayList<String> stockName = new ArrayList<>();
-    FloatingActionButton addStockWatchList;
     RecyclerAdapter recyclerAdaptor;
     private RecyclerAdapter.RecyclerViewClickListener listener;
     public String clickedStock;
@@ -39,7 +40,20 @@ public class WatchlistFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_watchlist, container, false);
         instance = this;
+        setHasOptionsMenu(true);
         RecyclerView watchList = view.findViewById(R.id.watchlist_listview);
+
+        // webview display
+        // Get a handle on your webview
+        WebView webViewHeroes = view.findViewById(R.id.ticker_webview);
+        webViewHeroes.getSettings().setAllowContentAccess(true);
+        webViewHeroes.getSettings().setAllowFileAccess(true);
+        // Populate webview with your html
+        webViewHeroes.getSettings().setJavaScriptEnabled(true);
+        webViewHeroes.loadUrl("file:///android_asset/TickerTape.html");
+
+
+
         UserFirebase userFirebase = new UserFirebase();
         userFirebase.getListOfWatchList(new UserFirebase.UserInterface() {
             @Override
@@ -87,15 +101,7 @@ public class WatchlistFragment extends Fragment {
 
         });
 
-        addStockWatchList = view.findViewById(R.id.fab_add_watchlist);
-        addStockWatchList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), AddStockWatchlist.class);
-                intent.putExtra("stockName",stockName);
-                startActivity(intent);
-            }
-        });
+
 
 
         return view;
@@ -126,5 +132,54 @@ public class WatchlistFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.add_portfolio).setVisible(false);
+        menu.findItem(R.id.add_paper_trade).setVisible(false);
+        menu.findItem(R.id.add_friend).setVisible(false);
+
+        super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+        case R.id.addWatchlist:
+            Intent intent = new Intent(getContext(), AddStockWatchlist.class);
+            intent.putExtra("stockName",stockName);
+            startActivity(intent);
+            return true;
+
+        case R.id.search_company:
+            FragmentManager fm = getActivity().getFragmentManager();
+            SearchCompDialog dialog = new SearchCompDialog();
+            dialog.show(fm, "SearchCompDialog");
+            return true;
+        case R.id.advance_chart:
+            Intent intent0 = new Intent(getContext(), AdvancedChart.class);
+            startActivity(intent0);
+            return true;
+        case R.id.stock_screener:
+            Intent intent1 = new Intent(getContext(), StockScreener.class);
+            startActivity(intent1);
+            return true;
+        case R.id.market_movers:
+            Intent intent2 = new Intent(getContext(), MarketMovers.class);
+            startActivity(intent2);
+            return true;
+        case R.id.market_overview:
+            Intent intent3 = new Intent(getContext(), MarketOverview.class);
+            startActivity(intent3);
+            return true;
+        case R.id.economic_calendar:
+            Intent intent4 = new Intent(getContext(), EconomicCalendar.class);
+            startActivity(intent4);
+            return true;
+
+    }
+        return(super.onOptionsItemSelected(item));
     }
 }

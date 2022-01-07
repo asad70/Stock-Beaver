@@ -5,4 +5,5 @@ public class Data {
     public String[] getData() {
         return symbol.clone();
     }
+
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.stockbeaver">
+    package="com.example.stockbeaver" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -9,17 +9,16 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.StockBeaver">
+        android:theme="@style/Theme.StockBeaver" >
         <activity
             android:name=".companyInfoTabs"
             android:exported="true"
             android:label="@string/title_activity_company_info"
-            android:theme="@style/Theme.StockBeaver.NoActionBar" />
+            android:theme="@style/Theme.StockBeaver"/>
         <activity
             android:name=".MainPage"
             android:exported="true"
             android:label="@string/title_activity_main_page" />
-
         <activity
             android:name=".Login"
             android:label="@string/app_name"
@@ -27,19 +26,36 @@
         <activity
             android:name=".Signup"
             android:label="@string/app_name" />
-
         <activity
             android:name=".AddStockWatchlist"
             android:label="@string/app_name" />
-
         <activity
             android:name=".AddStockPortfolio"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".StockScreener"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".MarketMovers"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".MarketOverview"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".EconomicCalendar"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".DetailedChart"
+        android:label="@string/app_name" />
+        <activity
+            android:name=".AdvancedChart"
+            android:screenOrientation="landscape"
             android:label="@string/app_name" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.StockBeaver.NoActionBar">
+            android:theme="@style/Theme.StockBeaver.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

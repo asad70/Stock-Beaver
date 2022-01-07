@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:title="Search"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:id="@+id/search_company"
+        app:showAsAction="always"
+        />
+    <item
+        android:title="Advance Chart"
+        android:icon="@drawable/ic_baseline_candlestick_chart_24"
+        android:id="@+id/advance_chart"
+        app:showAsAction="always"
+        />
+    <item
+        android:title="Add"
+        android:icon="@drawable/ic_baseline_add_24"
+        android:id="@+id/addWatchlist"
+        app:showAsAction="always"
+        />
+    <item
+        android:title="Add Portfolio"
+        android:icon="@drawable/ic_baseline_add_chart_24"
+        android:id="@+id/add_portfolio"
+        app:showAsAction="always"
+        />
+    <item
+        android:title="Add Paper trade"
+        android:icon="@drawable/ic_baseline_post_add_24"
+        android:id="@+id/add_paper_trade"
+        app:showAsAction="always"
+        />
+    <item
+        android:title="Add Friend"
+        android:icon="@drawable/ic_baseline_person_add_24"
+        android:id="@+id/add_friend"
+        app:showAsAction="always"
+        />
+    <item
+        android:title="Stock Screener"
+        android:icon="@drawable/ic_baseline_post_add_24"
+        android:id="@+id/stock_screener"
+        />
+    <item
+        android:title="Market Movers"
+        android:icon="@drawable/ic_baseline_post_add_24"
+        android:id="@+id/market_movers"
+        />
+    <item
+        android:title="Market Overview"
+        android:icon="@drawable/ic_baseline_post_add_24"
+        android:id="@+id/market_overview"
+        />
+    <item
+        android:title="Economic Calendar"
+        android:icon="@drawable/ic_baseline_post_add_24"
+        android:id="@+id/economic_calendar"
+        />
+</menu>

@@ -5,6 +5,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 
@@ -34,6 +35,12 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 Intent myIntent = new Intent(Login.this, MainPage.class);
                 String email = emailEditText.getText().toString();
+                String password = passwordEditText.getText().toString();
+
+                User newLoginUser = new User(email, password);
+                newLoginUser.setEmail(email);
+                newLoginUser.setPassword(password);
+
                 myIntent.putExtra(MainActivity.EXTRA_MESSAGE + "email", email);
                 startActivity(myIntent);
             }

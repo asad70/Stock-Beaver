@@ -1,16 +1,15 @@
 package com.example.stockbeaver;
 
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import org.json.JSONArray;
-import org.json.JSONObject;
 public class JsonParsing {
 
     // Take url and convert it to String
-    protected static String convertUrlToString(String urlofJson) throws Exception
-    {
+    protected static String convertUrlToString(String urlofJson) throws Exception {
         BufferedReader bufferReaderObject = null;
         try {
             // create object of url and pass the url
@@ -23,6 +22,7 @@ public class JsonParsing {
             while ((counter = bufferReaderObject.read(charArray)) != -1)
                 bufferObject.append(charArray, 0, counter);
 
+            Log.d("Tagbuffer", String.valueOf(bufferObject));
             // convert String buffer to String
             return bufferObject.toString();
         }

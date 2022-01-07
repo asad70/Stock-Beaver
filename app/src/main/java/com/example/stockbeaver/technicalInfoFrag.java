@@ -18,20 +18,13 @@ import java.io.InputStream;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link fundamentalInfoFrag} factory method to
- * create an instance of this fragment.
- */
-public class fundamentalInfoFrag extends Fragment {
+public class technicalInfoFrag extends Fragment {
     Context context;
 
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_fundamental_info, container, false);
+        View v = inflater.inflate(R.layout.fragment_technical_info, container, false);
         context = container.getContext();
 
 
@@ -51,9 +44,8 @@ public class fundamentalInfoFrag extends Fragment {
             }
 
             String ex_sym = exchange.toUpperCase() + ":" + clickedStock.toUpperCase();
-            Log.d("Tagsym", ex_sym);
 
-            InputStream is = context.getAssets().open("fundamental.html");
+            InputStream is = context.getAssets().open("technicalIndicator.html");
             int size = is.available();
 
             // Read the entire asset into a local byte buffer.
@@ -69,8 +61,8 @@ public class fundamentalInfoFrag extends Fragment {
 
 
             // Get a handle on your webview
-            WebView webViewHeroes = v.findViewById(R.id.fundamental);
-            webViewHeroes.getSettings().setUseWideViewPort(true);
+            WebView webViewHeroes = v.findViewById(R.id.technical);
+
             webViewHeroes.getSettings().setAllowContentAccess(true);
             webViewHeroes.getSettings().setAllowFileAccess(true);
             // Populate webview with your html
