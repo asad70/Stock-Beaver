@@ -6,13 +6,13 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -38,6 +38,8 @@ import yahoofinance.YahooFinance;
 public class currentInfoFrag extends Fragment {
     Context context;
     Button detailedChart;
+    Button companyPro;
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -74,8 +76,6 @@ public class currentInfoFrag extends Fragment {
         int timeout = 10000;
         AlphaVantageConnector apiConnector = new AlphaVantageConnector(apiKey, timeout);
         StockQuotes stockQuotes = new StockQuotes(apiConnector);
-
-
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -85,7 +85,7 @@ public class currentInfoFrag extends Fragment {
             arrayOfNameData.add(String.valueOf(stock.getOpen()));
             String high = String.valueOf(stock.getHigh());
             String low = String.valueOf(stock.getLow());
-            String highLow = low + "/" + high;
+            String highLow = low + "/" + String.format("%.2f", Float.parseFloat(high));
             arrayOfNameData.add(highLow);
             String change = String.valueOf(stock.getChange());
             String change_perc = String.valueOf(stock.getChangePercent());
@@ -95,6 +95,9 @@ public class currentInfoFrag extends Fragment {
             arrayOfNameData.add(String.valueOf(stock.getVolume()));
         } catch (AlphaVantageException e) {
             System.out.println("something went wrong");
+        } catch (Exception e){
+            Toast.makeText(getContext(), "Invalid Ticker",
+                    Toast.LENGTH_LONG).show();
         }
 
 
@@ -132,6 +135,7 @@ public class currentInfoFrag extends Fragment {
             webViewHeroes.getSettings().setAllowFileAccess(true);
             // Populate webview with your html
             webViewHeroes.getSettings().setJavaScriptEnabled(true);
+            webViewHeroes.setOnTouchListener((v1, event) -> true);
             webViewHeroes.loadDataWithBaseURL(null, str, "text/html", "UTF-8", null);
 
         } catch (IOException e) {
@@ -153,9 +157,17 @@ public class currentInfoFrag extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent1 = new Intent(getActivity(), DetailedChart.class);
-                Log.d("Tagcli",clickedStock);
                 intent1.putExtra("clickedStock", clickedStock);
                 startActivity(intent1);
+            }
+        });
+        companyPro = v.findViewById(R.id.company_profile);
+        companyPro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent2 = new Intent(getActivity(), CompanyProfile.class);
+                intent2.putExtra("clickedStock", clickedStock);
+                startActivity(intent2);
             }
         });
         return v;

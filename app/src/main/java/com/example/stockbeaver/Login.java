@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * Activity class for the login screen.
  */
 public class Login extends AppCompatActivity {
+    public static Data newLoginUser = new Data();
 
     protected EditText emailEditText;
     protected EditText passwordEditText;
@@ -36,10 +37,7 @@ public class Login extends AppCompatActivity {
                 Intent myIntent = new Intent(Login.this, MainPage.class);
                 String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
-
-                User newLoginUser = new User(email, password);
                 newLoginUser.setEmail(email);
-                newLoginUser.setPassword(password);
 
                 myIntent.putExtra(MainActivity.EXTRA_MESSAGE + "email", email);
                 startActivity(myIntent);

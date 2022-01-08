@@ -8,7 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import androidx.fragment.app.Fragment;
 
@@ -75,6 +77,12 @@ public class fundamentalInfoFrag extends Fragment {
             webViewHeroes.getSettings().setAllowFileAccess(true);
             // Populate webview with your html
             webViewHeroes.getSettings().setJavaScriptEnabled(true);
+            webViewHeroes.setWebViewClient(new WebViewClient(){
+                @Override //for APIs 24 and later
+                public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request){
+                    return true;
+                }
+            });
             //webViewHeroes.loadUrl("file:///android_asset/technicalIndicator.html");
             webViewHeroes.loadDataWithBaseURL(null, str, "text/html", "UTF-8", null);
 

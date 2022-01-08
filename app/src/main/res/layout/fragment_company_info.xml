@@ -29,8 +29,20 @@
         android:id="@+id/detailed_chart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="View Detailed Chart"
+        android:text=" Detailed Chart"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.922"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/symbol_webview" />
+
+    <Button
+        android:id="@+id/company_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="Company Profile"
+        app:layout_constraintEnd_toStartOf="@+id/detailed_chart"
+        app:layout_constraintHorizontal_bias="0.326"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/symbol_webview" />
 

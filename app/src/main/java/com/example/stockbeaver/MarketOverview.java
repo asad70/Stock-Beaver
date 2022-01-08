@@ -3,7 +3,9 @@ package com.example.stockbeaver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,7 +22,13 @@ public class MarketOverview extends AppCompatActivity {
         webViewHeroes.getSettings().setAllowContentAccess(true);
         webViewHeroes.getSettings().setAllowFileAccess(true);
         webViewHeroes.getSettings().setJavaScriptEnabled(true);
-        webViewHeroes.loadUrl("file:///android_asset/MarketOverview.html");
+        webViewHeroes.setWebViewClient(new WebViewClient(){
+            @Override //for APIs 24 and later
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request){
+                return true;
+            }
+        });
+        webViewHeroes.loadUrl("file:///android_asset/MarketOver.html");
     }
 
     // show back menu

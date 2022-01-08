@@ -90,7 +90,7 @@
         android:layout_height="62dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:backgroundTint="#FF4019"
+        android:backgroundTint="#32413A"
         android:maxWidth="350dp"
         android:text="@string/register"
         android:textColor="#FFFFFF"

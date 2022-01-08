@@ -3,6 +3,7 @@ package com.example.stockbeaver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -63,4 +64,9 @@ public class companyInfoTabs extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.trade_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 }

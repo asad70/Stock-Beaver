@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -50,9 +51,11 @@ public class WatchlistFragment extends Fragment {
         webViewHeroes.getSettings().setAllowFileAccess(true);
         // Populate webview with your html
         webViewHeroes.getSettings().setJavaScriptEnabled(true);
+        webViewHeroes.setOnTouchListener((v1, event) -> true);
         webViewHeroes.loadUrl("file:///android_asset/TickerTape.html");
 
 
+        Log.d("Tagemail", Login.newLoginUser.getEmail());
 
         UserFirebase userFirebase = new UserFirebase();
         userFirebase.getListOfWatchList(new UserFirebase.UserInterface() {
@@ -140,7 +143,6 @@ public class WatchlistFragment extends Fragment {
         menu.findItem(R.id.add_portfolio).setVisible(false);
         menu.findItem(R.id.add_paper_trade).setVisible(false);
         menu.findItem(R.id.add_friend).setVisible(false);
-
         super.onPrepareOptionsMenu(menu);
     }
 

@@ -6,4 +6,11 @@ public class Data {
         return symbol.clone();
     }
 
+    private String email = "a@g.com";
+    public String getEmail(){
+        return email;
+    }
+    public void setEmail(String email){
+        this.email = email;
+    }
 }

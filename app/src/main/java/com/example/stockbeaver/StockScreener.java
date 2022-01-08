@@ -3,7 +3,9 @@ package com.example.stockbeaver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,6 +22,12 @@ public class StockScreener extends AppCompatActivity {
         webViewHeroes.getSettings().setAllowContentAccess(true);
         webViewHeroes.getSettings().setAllowFileAccess(true);
         webViewHeroes.getSettings().setJavaScriptEnabled(true);
+        webViewHeroes.setWebViewClient(new WebViewClient(){
+            @Override //for APIs 24 and later
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request){
+                return true;
+            }
+        });
         webViewHeroes.loadUrl("file:///android_asset/Screener.html");
     }
 
