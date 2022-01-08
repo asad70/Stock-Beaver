@@ -1,5 +1,5 @@
 # Stock-Beaver
-Stock Beaver - An android app to helps users track their favorite stock real in time.
+Stock Beaver - An android app to helps users track their favorite stock real time.
 
 ## Stock Beaver
 * User can build (add/delete) Watchlist - real time update.
